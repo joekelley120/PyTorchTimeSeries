@@ -1,6 +1,5 @@
 import torch
 from torch.optim import Optimizer
-from math import sqrt
 
 
 class PARTICLE(Optimizer):
@@ -171,7 +170,7 @@ class PARTICLE(Optimizer):
         self._set_param_vector(xo)
         _, gradient = grad()
 
-        # Calculate learning rate based on
+        # Calculate learning rate
         step = ds / torch.sqrt(torch.sum(torch.pow(gradient, 2)))
 
         # Update Particle

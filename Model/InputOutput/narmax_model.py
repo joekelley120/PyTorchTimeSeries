@@ -77,7 +77,7 @@ class NARMAXCell(torch.nn.Module):
 
         Type of forward pass depends on if an output (y(t)) is provided. If output is None then
         predict the next output (y_hat(t)) and insert that output prediction into the output
-        TDL (otdl) this is common for k-step ahead predictions. Otherwise insert the
+        TDL (otdl) this is common for multi-step prediction. Otherwise insert the
         output (y(t)) into the output TDL (otdl) this is referred to as loading.
 
         :param input: input (u(t))
@@ -102,7 +102,7 @@ class NARMAXCell(torch.nn.Module):
         Predict 1-step ahead for the NARMAX cell. The measurement (y(t)) is inserted into the output
         TDL(otdl) every time this method is called. We refer to as the loading phase.
         Loading is the process of inserting inputs and outputs measurements into their corresponding
-        TDL before performing a k-step ahead prediction.
+        TDL before performing a multi-step prediction.
 
         :param input: input (u(t))
         :param output: output (y(t))
@@ -135,7 +135,7 @@ class NARMAXCell(torch.nn.Module):
         """
         Predict 1-step ahead and update TDL for the NARMAX cell. The prediction (y_hat(t)) is
         inserted into the output TDL (otdl) every time this method is called. This method should
-        be called multiple times for k-step ahead predictions.
+        be called multiple times for multi-step prediction.
 
         :param input: input (u(t))
         :param itdl: input TDL
@@ -262,7 +262,8 @@ class NARMAX(nn.Module):
         # type: (Tensor, Tensor, Tensor, Tensor, Tensor) -> Tuple[Tensor, Tensor, Tensor, Tensor]
 
         """
-        Perform lading of inputs, outputs, and errors into the NARMAX's TDL.
+        Perform lading of inputs, outputs, and errors into the NARMAX's TDL. The loading phase runs
+        from 0 to time step 't'.
 
         :param inputs: inputs [u(0) ..... u(t)]
         :param outputs: outputs [y(0) ..... y(t)]
@@ -284,13 +285,14 @@ class NARMAX(nn.Module):
         # type: (Tensor, Tensor, Tensor, Tensor) -> Tuple[Tensor, Tensor, Tensor, Tensor]
 
         """
-        Perform predictions k-steps ahead for for NARMAX.
+        Perform predictions k-steps ahead for for NARMAX. The multi-step prediction runs from time step 't' to 't+H'
+        with H being the maximum prediction horizon.
 
-        :param inputs: inputs [u(0) ..... u(t)]
+        :param inputs: inputs [u(t+1) ..... u(t+H)] (H is maximum prediction horizon)
         :param itdl: input TDL
         :param otdl: output TDL
         :param etdl: error TDL
-        :return: output [y_hat(0) .... y_hat(t)], input TDL, output TDL, error TDL
+        :return: output [y_hat(t+1) .... y_hat(t+H)] (H is maximum prediction horizon), input TDL, output TDL, error TDL
         """
 
         output_tensor = torch.zeros_like(inputs)
@@ -305,14 +307,15 @@ class NARMAX(nn.Module):
         # type: (Tensor, Tensor, Tensor, Tensor, float) -> Tuple[Tensor, Tensor, Tensor, Tensor]
 
         """
-        Simulate the NARMAX.
+        Simulate the NARMAX. The multi-step simulation runs from time step 't' to 't+H'
+        with H being the maximum prediction horizon.
 
-        :param inputs: inputs [u(0) ..... u(t)]
+        :param inputs: inputs [u(t+1) ..... u(t+H)] (H is maximum prediction horizon)
         :param itdl: input TDL
         :param otdl: output TDL
         :param etdl: error TDL
         :param variance: variance in error
-        :return: output [y_hat(0) .... y_hat(t)], input TDL, output TDL, error TDL
+        :return: output [y_hat(t+1) .... y_hat(t+H)] (H is maximum prediction horizon), input TDL, output TDL, error TDL
         """
 
         output_tensor = torch.zeros_like(inputs)

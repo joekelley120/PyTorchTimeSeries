@@ -21,7 +21,7 @@ def init_tdl(model, inputs, labels, device):
     :param inputs: inputs
     :param labels: labels
     :param device: device type
-    :return: input, labels, input TDL, output TDL
+    :return: input, labels, input TDL, output TDL, error TDL
     """
 
     max_delay_size = max(model.input_delay_size, model.output_delay_size, model.error_delay_size)
@@ -50,7 +50,7 @@ def init_tdl_zeros(model, batch_size, device):
     :param model: NARMAX model
     :param batch_size: size of batch
     :param device: device type
-    :return: input TDL, output TDL
+    :return: input TDL, output TDL, error TDL
     """
 
     # input tap-delay

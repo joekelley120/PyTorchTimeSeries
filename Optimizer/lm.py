@@ -1,6 +1,5 @@
 import torch
 from torch.optim import Optimizer
-import gc
 
 
 class LM(Optimizer):

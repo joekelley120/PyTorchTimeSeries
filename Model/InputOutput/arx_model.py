@@ -54,7 +54,7 @@ class ARXCell(torch.nn.Module):
 
         Type of forward pass depends on if an output (y(t)) is provided. If output is None then
         predict the next output (y_hat(t)) and insert that output prediction into the output
-        TDL (otdl) this is common for k-step ahead predictions. Otherwise insert the
+        TDL (otdl) this is common for multi-step ahead prediction. Otherwise insert the
         output (y(t)) into the output TDL (otdl) this is referred to as loading.
 
         :param input: input (u(t))
@@ -78,7 +78,7 @@ class ARXCell(torch.nn.Module):
         Predict 1-step ahead for the ARX cell. The measurement (y(t)) is inserted into the output
         TDL (otdl) every time this method is called, which we refer to as the loading phase.
         Loading is the process of inserting inputs and outputs measurements into their corresponding
-        TDL before performing a k-step ahead prediction.
+        TDL before performing a multi-step prediction.
 
         :param input: input (u(t))
         :param output: output (y(t))
@@ -102,9 +102,9 @@ class ARXCell(torch.nn.Module):
         # type: (Tensor, Tensor, Tensor) -> Tuple[Tensor, Tensor, Tensor]
 
         """
-        Predict 1-step ahead and update TDL for the NARX cell. The prediction (y_hat(t)) is
+        Predict 1-step ahead and update TDL for the ARX cell. The prediction (y_hat(t)) is
         inserted into the output TDL (otdl) every time this method is called. This method should
-        be called multiple times for k-step ahead predictions.
+        be called multiple times for multi-step ahead prediction.
 
         :param input: input (u(t))
         :param itdl: input TDL
@@ -177,7 +177,8 @@ class ARX(nn.Module):
         # type: (Tensor, Tensor, Tensor, Tensor) -> Tuple[Tensor, Tensor, Tensor]
 
         """
-        Perform lading of inputs and outputs into the ARX's TDL.
+        Perform lading of inputs and outputs into the ARX's TDL. The loading phase runs
+        from 0 to time step 't'.
 
         :param inputs: inputs [u(0) ..... u(t)]
         :param outputs: outputs [y(0) ..... y(t)]
@@ -198,12 +199,13 @@ class ARX(nn.Module):
         # type: (Tensor, Tensor, Tensor) -> Tuple[Tensor, Tensor, Tensor]
 
         """
-        Perform predictions k-steps ahead for for ARX.
+        Perform predictions k-steps ahead for for ARX. The multi-step prediction runs from time step 't' to 't+H'
+        with H being the maximum prediction horizon.
 
-        :param inputs: inputs [u(0) ..... u(t)]
+        :param inputs: inputs [u(t+1) ..... u(t+H)] (H is maximum prediction horizon)
         :param itdl: input TDL
         :param otdl: output TDL
-        :return: output [y_hat(0) .... y_hat(t)], input tDL, output TDL
+        :return: output [y_hat(t+1) .... y_hat(t+H)] (H is maximum prediction horizon), input tDL, output TDL
         """
 
         output_tensor = torch.zeros_like(inputs)
