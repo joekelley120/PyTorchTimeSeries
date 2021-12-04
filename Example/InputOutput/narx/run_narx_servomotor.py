@@ -5,7 +5,7 @@ from sklearn.preprocessing import MinMaxScaler
 
 CURRENT_TIME = time.strftime("%Y%m%d_%H%M%S")
 NARX_SAVE_LOC = 'train/servomotor/'
-NARX_LOAD_LOC = NARX_SAVE_LOC + 'narx_td40_n10'
+NARX_LOAD_LOC = NARX_SAVE_LOC + 'narx_td8_n10'
 NARX_LOAD_DATA = 'narx_model_100.ph'
 TRAIN_DATA = '../../../Data/ServoMotor.txt'
 
@@ -21,13 +21,13 @@ def main():
     # Use trained narx
     # If using already trained models, then configure
     # models save location above.
-    trained_model = False
+    trained_model = True
 
     # Training Parameters
-    epochs, print_every = 50000, 100
+    epochs, print_every = 10000, 100
 
     # NARX TDL Sizes for Input and Output
-    delays = 40
+    delays = 8
 
     # Number of neurons in NARX model
     neurons = 10
@@ -78,14 +78,14 @@ def main():
                                                     prediction_horizon=prediction_horizon,
                                                     overlap=False)
     input_tensor, label_tensor = input_tensor.view(1, -1, 1), label_tensor.view(1, -1, 1)
-    input_tensor, label_tensor = input_tensor[:, :10000, :], label_tensor[:, :10000, :]
+    input_tensor, label_tensor = input_tensor[:, :5000, :], label_tensor[:, :5000, :]
     plot_response(model, input_tensor, label_tensor)
 
     # Plot auto-correlation function for residual errors (prediction errors)
     input_tensor, label_tensor = init_training_data(model, inputs, labels,
                                                     prediction_horizon=prediction_horizon,
                                                     overlap=True)
-    input_tensor, label_tensor = input_tensor[:10000, :, :], label_tensor[:10000, :, :]
+    input_tensor, label_tensor = input_tensor[:5000, :, :], label_tensor[:5000, :, :]
     plot_acf(model, input_tensor, label_tensor, k_step=[1, 2, 3, 4])
     plot_errors(model, input_tensor, label_tensor, k_step=[1, 2, 3, 4])
     plot_ccf(model, input_tensor, label_tensor, k_step=[1, 2, 3, 4])
