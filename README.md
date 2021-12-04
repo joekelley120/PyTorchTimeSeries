@@ -2,6 +2,7 @@
 
 This repository demonstrates how to implement tap-delays (TDL) in PyTorch framework for time series modeling. Currently, NARX and NARMAX have been implemented.
 
+* Acronym list is shown below.
     | Acronym: |
     | ------------ |
     | NARX   - Nonlinear Autoregressive eXogenous. |
