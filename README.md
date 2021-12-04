@@ -13,21 +13,21 @@ Contains helper methods for training NARX and NARMAX networks. Link to the helpe
 
     | NARX Methods: | 
     | ------------- |
-    | Helper Methods [**NARX**](https://github.com/jpkfgd/pyTorchTapDelay/blob/master/Helper/InputOutput/narx_helper_methods.py) |
-    | Helper Methods [**NARMAX**](https://github.com/jpkfgd/pyTorchTapDelay/blob/master/Helper/InputOutput/narmax_helper_methods.py) |
+    | Helper Methods [**NARX**](https://github.com/jpkfgd/PyTorchTimeSeries/blob/master/Helper/InputOutput/narx_helper_methods.py) |
+    | Helper Methods [**NARMAX**](https://github.com/jpkfgd/PyTorchTimeSeries/blob/master/Helper/InputOutput/narmax_helper_methods.py) |
 
 * **Model:**
 Contains PyTorch implementation of NARX and NARMAX modules for time-series modeling. Link to the modules are shown below.
 
     | Modules: |
     | ------------ |
-    | Modules [**NARX**](https://github.com/jpkfgd/pyTorchTapDelay/blob/master/Model/InputOutput/narx_model.py) |
-    | Modules [**NARMAX**](https://github.com/jpkfgd/pyTorchTapDelay/blob/master/Model/InputOutput/narmax_model.py) |
+    | Modules [**NARX**](https://github.com/jpkfgd/PyTorchTimeSeries/blob/master/Model/InputOutput/narx_model.py) |
+    | Modules [**NARMAX**](https://github.com/jpkfgd/PyTorchTimeSeries/blob/master/Model/InputOutput/narmax_model.py) |
 
 * **Optimizer:**
 Contains PyTorch classes for optimization approaches shown below.
 
     | Optimizer Classes: |
     | ------------ |
-    | Optimizer [**LM**](https://github.com/jpkfgd/pyTorchTapDelay/blob/master/Optimizer/lm.py): Levenberg-Marquardt optimization algorithm. NOTE: This isn't an efficient implementation of LM, since pyTorch dosen't allow for gradient calculations with respect to a vector of errors. So the jacobian calculation isn't very efficient. |
-    | Optimizer [**SCG**](https://github.com/jpkfgd/pyTorchTapDelay/blob/master/Optimizer/scg.py): Scaled conjugate gradient optimization algorithm. |
+    | Optimizer [**LM**](https://github.com/jpkfgd/PyTorchTimeSeries/blob/master/Optimizer/lm.py): Levenberg-Marquardt optimization algorithm. NOTE: This isn't an efficient implementation of LM, since pyTorch dosen't allow for gradient calculations with respect to a vector of errors. So the jacobian calculation isn't very efficient. |
+    | Optimizer [**SCG**](https://github.com/jpkfgd/PyTorchTimeSeries/blob/master/Optimizer/scg.py): Scaled conjugate gradient optimization algorithm. |
