@@ -11,7 +11,7 @@ Contains examples for implementing PyTorch NARX and NARMAX modules for time-seri
 * **Helper Folder:**
 Contains helper methods for training NARX and NARMAX networks. Link to the helper methods are shown below
 
-    | NARX Methods: | 
+    | Helper Files: | 
     | ------------- |
     | Helper Methods [**NARX**](https://github.com/joekelley120/PyTorchTimeSeries/blob/master/Helper/InputOutput/narx_helper_methods.py) |
     | Helper Methods [**NARMAX**](https://github.com/joekelley120/PyTorchTimeSeries/blob/master/Helper/InputOutput/narmax_helper_methods.py) |
