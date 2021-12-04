@@ -6,7 +6,7 @@ This repository demonstrates how to implement tap-delays (TDL) in PyTorch framew
 
 ## Project Layout:
 * **Example Folder:**
-Contains examples for implementing PyTorch NARX and NARMAX modules for time-series modeling on real-life data. Also, included example for implementing a MRAC in PyTorch which a neural network controller.
+Contains examples for implementing PyTorch NARX and NARMAX modules for time-series modeling on real-life data. Also, included an example for implementing an MRAC in PyTorch which is a neural network controller.
 
 * **Helper Folder:**
 Contains helper methods for training NARX and NARMAX networks. Link to the helper methods are shown below
