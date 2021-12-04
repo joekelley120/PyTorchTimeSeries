@@ -82,7 +82,7 @@ def main():
                                                     prediction_horizon=prediction_horizon,
                                                     overlap=False)
     input_tensor, label_tensor = input_tensor.view(1, -1, 1), label_tensor.view(1, -1, 1)
-    input_tensor, label_tensor = input_tensor[:, :10000, :], label_tensor[:, :10000, :]
+    input_tensor, label_tensor = input_tensor[:, :5000, :], label_tensor[:, :5000, :]
     plot_response(model, input_tensor, label_tensor, loading_length)
 
     # Plot residual errors (prediction errors)
@@ -90,14 +90,14 @@ def main():
                                                     prediction_horizon=prediction_horizon,
                                                     overlap=True,
                                                     loading_length=loading_length)
-    input_tensor, label_tensor = input_tensor[:10000, :, :], label_tensor[:10000, :, :]
+    input_tensor, label_tensor = input_tensor[:5000, :, :], label_tensor[:5000, :, :]
     plot_acf(model, input_tensor, label_tensor, k_step=[1, 2, 3, 4], loading_length=loading_length)
     plot_errors(model, input_tensor, label_tensor, k_step=[1, 2, 3, 4], loading_length=loading_length)
     plot_ccf(model, input_tensor, label_tensor, k_step=[1, 2, 3, 4], loading_length=loading_length)
     plot_error_histogram(model, input_tensor, label_tensor, k_step=[1, 2, 3, 4], loading_length=loading_length)
 
     # Run a skyline function for performance of plant
-    plot_skyline_response(model, 10000, 200, 10, 1, -1)
+    plot_skyline_response(model, 5000, 200, 10, 1, -1)
 
     # Plot the mean square error for the k-step ahead predictions
     input_tensor, label_tensor = init_training_data(model, inputs, labels,
