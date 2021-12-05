@@ -13,8 +13,8 @@ import time
 CURRENT_TIME = time.strftime("%Y%m%d_%H%M%S")
 PLANT_SAVE_LOC = 'train/servomotor/'
 CONTROLLER_SAVE_LOC = 'train/servomotor/'
-PLANT_LOAD_LOC = PLANT_SAVE_LOC + 'mrac_ptd8_ctd8_n10'
-CONTROLLER_LOAD_LOC = CONTROLLER_SAVE_LOC + 'mrac_ptd8_ctd8_n10'
+PLANT_LOAD_LOC = PLANT_SAVE_LOC + 'mrac_ptd8_ctd8_n5'
+CONTROLLER_LOAD_LOC = CONTROLLER_SAVE_LOC + 'mrac_ptd8_ctd8_n5'
 PLANT_LOAD_DATA = 'plant_model_800.ph'
 CONTROLLER_LOAD_DATA = 'controller_model_800.ph'
 TRAIN_DATA = '../../../Data/ServoMotor.txt'
@@ -33,7 +33,7 @@ def main():
     # models save location above.
     # The plant model needs to be trained before
     # training or running the controller.
-    trained_plant, trained_controller = False, False
+    trained_plant, trained_controller = True, True
 
     # Load and retrain mrac controller model
     retrain_controller_from_last_save = False
