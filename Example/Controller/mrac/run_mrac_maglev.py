@@ -13,7 +13,7 @@ import time
 CURRENT_TIME = time.strftime("%Y%m%d_%H%M%S")
 PLANT_SAVE_LOC = 'train/maglev/'
 CONTROLLER_SAVE_LOC = 'train/maglev/'
-PLANT_LOAD_LOC = PLANT_SAVE_LOC + 'mrac_ptd6_ctd6_n5'
+PLANT_LOAD_LOC = PLANT_SAVE_LOC + 'mrac_ptd5_ctd5_n3'
 CONTROLLER_LOAD_LOC = CONTROLLER_SAVE_LOC + 'mrac_ptd6_ctd6_n5'
 PLANT_LOAD_DATA = 'plant_model_100.ph'
 CONTROLLER_LOAD_DATA = 'controller_model_1200.ph'
