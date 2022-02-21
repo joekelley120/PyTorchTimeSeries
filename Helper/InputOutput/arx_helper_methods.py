@@ -842,7 +842,7 @@ def plot_error_histogram(model, input_tensor, label_tensor, k_step=[1], number_o
     plt.show()
 
 
-def plot_ccf(model, input_tensor, label_tensor, k_step=1, lags=25):
+def plot_ccf(model, input_tensor, label_tensor, k_step=[1], lags=25):
 
     """
     Plot input and error cross correlation function.
@@ -850,7 +850,7 @@ def plot_ccf(model, input_tensor, label_tensor, k_step=1, lags=25):
     :param model: model
     :param input_tensor: input tensor
     :param label_tensor: output tensor
-    :param k_step: plot acf at specified k-step prediction (Default 1)
+    :param k_step: plot acf at specified k-step prediction (Default [1])
     :param lags: significant lags (Default 25)
     :return: none
     """
@@ -869,41 +869,50 @@ def plot_ccf(model, input_tensor, label_tensor, k_step=1, lags=25):
     # Calculate prediction errors
     errors = labels - outputs
 
-    # Split errors as provided lag
-    k_step_minus_one = k_step - 1
-    errors = errors[:, k_step_minus_one: k_step_minus_one + 1, :]
-    errors = errors.view(1, -1, model.output_size)
-    inputs = inputs[:, k_step_minus_one: k_step_minus_one + 1, :]
-    inputs = inputs.view(1, -1, model.input_size)
-
-    # Sort data for plotting
-    e, i, t = [], [], []
-    for k in range(errors.size()[1]):
-        t.append(k + 1)
-        e.append(errors[0, k, 0].item())
-        i.append(inputs[0, k, 0].item())
-
-    e = np.array(e)
-    i = np.array(i)
-    n = e.size
-    if n % 2 is not 0:
-        n -= 1
-        e = e[:-1]
-    variance_e = e.var()
-    variance_i = i.var()
-    x_e = e - e.mean()
-    x_i = i - i.mean()
-
-    r = np.correlate(x_e, x_i, mode='full')
-    acf = r / (sqrt(variance_e) * sqrt(variance_i) * n)
-    s = np.linspace(-lags, lags, 2 * lags + 1)
-
+    # Plot Data
     plt.clf()
-    plt.stem(s, acf[n - lags - 1: n + lags])
-    plt.axhline(y=1/lags, color='r', linestyle='--')
-    plt.axhline(y=-1/lags, color='r', linestyle='--')
-    plt.ylabel('ACF', color='tab:blue')
-    plt.title('Plant Cross Correlation Function (CCF)')
+
+    for z, k in zip(range(len(k_step)), k_step):
+
+        if len(k_step) > 1:
+            plt.subplot(ceil(len(k_step) / 2), 2, z + 1)
+
+        # Split errors as provided lag
+        k_step_minus_one = k - 1
+        er = errors[:, k_step_minus_one: k_step_minus_one + 1, :]
+        er = er.view(1, -1, model.output_size)
+        inp = inputs[:, k_step_minus_one: k_step_minus_one + 1, :]
+        inp = inp.view(1, -1, model.input_size)
+
+        # Sort data for plotting
+        e, i, t = [], [], []
+        for p in range(er.size()[1]):
+            t.append(p + 1)
+            e.append(er[0, p, 0].item())
+            i.append(inp[0, p, 0].item())
+
+        e = np.array(e)
+        i = np.array(i)
+        n = e.size
+        if n % 2 is not 0:
+            n -= 1
+            e = e[:-1]
+        variance_e = e.var()
+        variance_i = i.var()
+        x_e = e - e.mean()
+        x_i = i - i.mean()
+
+        r = np.correlate(x_e, x_i, mode='full')
+        acf = r / (sqrt(variance_e) * sqrt(variance_i) * n)
+        s = np.linspace(-lags, lags, 2 * lags + 1)
+
+        plt.stem(s, acf[n - lags - 1: n + lags], use_line_collection=True)
+        plt.axhline(y=1 / lags, color='r', linestyle='--')
+        plt.axhline(y=-1 / lags, color='r', linestyle='--')
+
+        plt.ylabel('CCF', color='tab:blue')
+        plt.title('Cross Correlation Function (CCF) for ' + str(k) + '-Step Prediction')
+
     plt.show()
 
 

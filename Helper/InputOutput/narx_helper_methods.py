@@ -46,6 +46,7 @@ def init_tdl_zeros(model, batch_size, device):
 
     :param model: NARX model
     :param batch_size: size of batch
+    :param device: device type
     :return: input TDL, output TDL
     """
 
@@ -840,7 +841,7 @@ def plot_error_histogram(model, input_tensor, label_tensor, k_step=[1], number_o
     plt.show()
 
 
-def plot_ccf(model, input_tensor, label_tensor, k_step=[1], lags=25, loading_length=0):
+def plot_ccf(model, input_tensor, label_tensor, k_step=[1], lags=25):
 
     """
     Plot input and error cross correlation function.
@@ -850,8 +851,6 @@ def plot_ccf(model, input_tensor, label_tensor, k_step=[1], lags=25, loading_len
     :param label_tensor: output tensor
     :param k_step: plot acf at specified k-step prediction (Default [1])
     :param lags: significant lags (Default 25)
-    :param loading_length: time length used for loading the NARMAX model's tap-delay of errors. Should usually be
-                           3 times the length of the error tap-delay.
     :return: none
     """
 

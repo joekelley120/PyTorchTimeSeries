@@ -9,7 +9,7 @@ class LM(Optimizer):
     with the Marquardt algorithm." IEEE transactions on Neural Networks 5.6
     (1994): 989-993..
 
-    .. warning::
+    ... warning::
         This optimizer doesn't support per-parameter options and
         parameters groups.
 

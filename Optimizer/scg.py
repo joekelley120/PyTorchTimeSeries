@@ -9,7 +9,7 @@ class SCG(Optimizer):
     Møller, Martin F. A scaled conjugate gradient algorithm for fast supervised
     learning. Aarhus University, Computer Science Department, 1990.
 
-    .. warning::
+    ... warning::
         This optimizer doesn't support per-parameter options and
         parameters groups.
 

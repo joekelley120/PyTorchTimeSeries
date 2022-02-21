@@ -5,7 +5,7 @@ from sklearn.preprocessing import MinMaxScaler
 
 CURRENT_TIME = time.strftime("%Y%m%d_%H%M%S")
 NARX_SAVE_LOC = 'train/servomotor/'
-NARX_LOAD_LOC = NARX_SAVE_LOC + 'narx_td8_n10'
+NARX_LOAD_LOC = NARX_SAVE_LOC + 'narx_td15_n10'
 NARX_LOAD_DATA = 'narx_model_100.ph'
 TRAIN_DATA = '../../../Data/ServoMotor.txt'
 
@@ -27,7 +27,7 @@ def main():
     epochs, print_every = 10000, 100
 
     # NARX TDL Sizes for Input and Output
-    delays = 8
+    delays = 15
 
     # Number of neurons in NARX model
     neurons = 10

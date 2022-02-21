@@ -5,7 +5,7 @@ import time
 
 CURRENT_TIME = time.strftime("%Y%m%d_%H%M%S")
 NARMAX_SAVE_LOC = 'train/servomotor/'
-NARMAX_LOAD_LOC = NARMAX_SAVE_LOC + 'narmax_td8_n10'
+NARMAX_LOAD_LOC = NARMAX_SAVE_LOC + 'narmax_td15_n10'
 NARMAX_LOAD_DATA = 'narmax_model_100.ph'
 TRAIN_DATA = '../../../Data/ServoMotor.txt'
 
@@ -27,7 +27,7 @@ def main():
     epochs, print_every = 10000, 100
 
     # NARMAX TDL Sizes for Input, Output, and Error
-    delays = 8
+    delays = 15
 
     # Number of neurons in NARMAX model
     neurons = 10

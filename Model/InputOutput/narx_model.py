@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from Utility.TDL import insert_tdl
-from Utility.FullyConnectedLayer import FullyConnectedLayer
+from Utility.DenseLayer import Dense
 import math
 
 
@@ -46,24 +46,19 @@ class NARXCell(torch.nn.Module):
 
         self.add_input_delay = 0 if self.zero_input_delay is False else 1
 
-        # Initialize fully connected layers
-        self.fully = nn.ModuleList()
+        # Initialize hidden layers
+        self.hidden_layers = nn.ModuleList()
+        combine_input_size = (self.input_size * self.input_delay_size +
+                              self.output_size * self.output_delay_size +
+                              self.add_input_delay)
         for i in range(layers):
             if i is 0:
-                self.fully.append(FullyConnectedLayer(self.input_size * self.input_delay_size + 
-                                                      self.output_size * self.output_delay_size + 
-                                                      self.add_input_delay,
-                                                      self.hidden_size, self.activation_type))
+                self.hidden_layers.append(Dense(combine_input_size, self.hidden_size, self.activation_type))
             else:
-                self.fully.append(FullyConnectedLayer(self.hidden_size, self.hidden_size, self.activation_type))
+                self.hidden_layers.append(Dense(self.hidden_size, self.hidden_size, self.activation_type))
 
-        # Second Layer
-        self.lw = nn.Parameter(0.01 * torch.randn(self.output_size, self.hidden_size,
-                               requires_grad=True, dtype=torch.float64))
-
-        # Bias for the Second Layer
-        self.b2 = nn.Parameter(0.01 * torch.randn(self.output_size, 1,
-                               requires_grad=True, dtype=torch.float64))
+        # Initialize the output layer
+        self.output_layer = Dense(self.hidden_size, self.output_size, 'linear')
 
     def forward(self, input, itdl, otdl, output=None):
         # type: (Tensor, Tensor, Tensor, Tensor) -> Tuple[Tensor, Tensor, Tensor]
@@ -73,7 +68,7 @@ class NARXCell(torch.nn.Module):
 
         Type of forward pass depends on if an output (y(t)) is provided. If output is None then
         predict the next output (y_hat(t)) and insert that output prediction into the output
-        TDL (otdl) this is common for multi-step prediction. Otherwise insert the
+        TDL (otdl) this is common for multi-step prediction. Otherwise, insert the
         output (y(t)) into the output TDL (otdl) this is referred to as loading.
 
         :param input: input (u(t))
@@ -163,15 +158,12 @@ class NARXCell(torch.nn.Module):
 
         hidden = torch.cat([delay, otdl], dim=1)
 
-        # Loop through all fully connected layers
+        # Loop through all hidden layers
         for i in range(self.layers):
-            hidden = self.fully[i].forward(hidden)
+            hidden = self.hidden_layers[i](hidden)
 
-        # Output Layer Calculation
-        n2 = torch.matmul(self.lw, hidden) + self.b2
-
-        # Output Layer is Linear Transformation
-        a2 = n2
+        # Output layer
+        a2 = self.output_layer(hidden)
 
         return a2
 

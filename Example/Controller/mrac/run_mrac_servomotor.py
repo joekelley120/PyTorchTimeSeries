@@ -94,8 +94,8 @@ def main():
     iw = plant.cell.fully[0].w[:, :(plus_one + narx_delay)]
     ow = plant.cell.fully[0].w[:, (plus_one + narx_delay):]
     b1 = plant.cell.fully[0].b
-    lw = plant.cell.lw
-    b2 = plant.cell.b2
+    lw = plant.cell.output_layer.w
+    b2 = plant.cell.output_layer.b
     controller_setup = ControllerConfiguration(mrac_delay, mrac_delay, mrac_delay, mrac_neurons,
                                                narx_delay, narx_delay, narx_neurons,
                                                iw, ow, b1, lw, b2)
