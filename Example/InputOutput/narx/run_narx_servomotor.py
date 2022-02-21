@@ -5,7 +5,7 @@ from sklearn.preprocessing import MinMaxScaler
 
 CURRENT_TIME = time.strftime("%Y%m%d_%H%M%S")
 NARX_SAVE_LOC = 'train/servomotor/'
-NARX_LOAD_LOC = NARX_SAVE_LOC + 'narx_td8_n10'
+NARX_LOAD_LOC = NARX_SAVE_LOC + 'narx_td15_n10'
 NARX_LOAD_DATA = 'narx_model_100.ph'
 TRAIN_DATA = '../../../Data/ServoMotor.txt'
 
@@ -21,7 +21,7 @@ def main():
     # Use trained narx
     # If using already trained models, then configure
     # models save location above.
-    trained_model = False
+    trained_model = True
 
     # Training Parameters
     epochs, print_every = 10000, 100

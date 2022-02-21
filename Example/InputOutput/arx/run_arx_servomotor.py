@@ -21,13 +21,13 @@ def main():
     # Use trained ARX
     # If using already trained models, then configure
     # models save location above.
-    trained_model = False
+    trained_model = True
 
     # Training Parameters
     epochs, print_every = 1000, 10
 
     # ARX TDL Sizes for Input and Output
-    delays = 15
+    delays = 8
 
     # Prediction horizon for training
     prediction_horizon = 100
