@@ -4,9 +4,7 @@ import torch.nn as nn
 
 class Dense(torch.nn.Module):
 
-    __constants__ = ['input_size',
-                     'hidden_size',
-                     'activation_type']
+    __constants__ = ['activation_type']
 
     def __init__(self, input_size, output_size, activation_type='tanh', weight_factory=0.01):
 
