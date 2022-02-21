@@ -21,7 +21,7 @@ def main():
     # Use trained narmax
     # If using already trained models, then configure
     # models save location above.
-    trained_model = True
+    trained_model = False
 
     # Training Parameters
     epochs, print_every = 10000, 100

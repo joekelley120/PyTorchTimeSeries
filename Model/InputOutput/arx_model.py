@@ -33,18 +33,16 @@ class ARXCell(torch.nn.Module):
         self.output_size = output_size
         self.zero_input_delay = zero_input_delay
 
-        wf = 0.01
-
         # Input TDL Weight
-        self.iw = nn.Parameter(wf * torch.randn(1, self.input_delay_size * self.input_size +
+        self.iw = nn.Parameter(0.01 * torch.randn(1, self.input_delay_size * self.input_size +
                                self.zero_input_delay * self.input_size,
                                requires_grad=True, dtype=torch.float64))
 
         # Output TDL Weight
-        self.ow = nn.Parameter(wf * torch.randn(1, self.output_delay_size * self.output_size,
+        self.ow = nn.Parameter(0.01 * torch.randn(1, self.output_delay_size * self.output_size,
                                requires_grad=True, dtype=torch.float64))
 
-        self.b = nn.Parameter(wf * torch.randn(1, 1, requires_grad=True, dtype=torch.float64))
+        self.b = nn.Parameter(0.01 * torch.randn(1, 1, requires_grad=True, dtype=torch.float64))
 
     def forward(self, input, itdl, otdl, output=None):
         # type: (Tensor, Tensor, Tensor, Tensor) -> Tuple[Tensor, Tensor, Tensor]
@@ -54,7 +52,7 @@ class ARXCell(torch.nn.Module):
 
         Type of forward pass depends on if an output (y(t)) is provided. If output is None then
         predict the next output (y_hat(t)) and insert that output prediction into the output
-        TDL (otdl) this is common for multi-step ahead prediction. Otherwise insert the
+        TDL (otdl) this is common for multi-step ahead prediction. Otherwise, insert the
         output (y(t)) into the output TDL (otdl) this is referred to as loading.
 
         :param input: input (u(t))
@@ -141,13 +139,7 @@ class ARXCell(torch.nn.Module):
         else:
             delay = itdl
 
-        # First Layer Calculation
-        n1 = (torch.matmul(self.iw, delay) + torch.matmul(self.ow, otdl) + self.b)
-
-        # First Layer Nonlinear Transformation
-        a1 = n1
-
-        return a1
+        return torch.matmul(self.iw, delay) + torch.matmul(self.ow, otdl) + self.b
 
 
 class ARX(nn.Module):

@@ -2,31 +2,28 @@ import torch
 import torch.nn as nn
 
 
-class FullyConnectedLayer(torch.nn.Module):
+class Dense(torch.nn.Module):
 
     __constants__ = ['input_size',
                      'hidden_size',
                      'activation_type']
 
-    def __init__(self, input_size, hidden_size, activation_type='tanh'):
+    def __init__(self, input_size, output_size, activation_type='tanh', weight_factory=0.01):
 
         """
-        Fully Connected Layer.
+        Dense Layer.
 
-        :param input_size: number of inputs
-        :param hidden_size: number of neurons in hidden layer
+        :param input_size: input size
+        :param output_size: output size
         :param activation_type: hidden layer activation type (ie 'tanh', 'sigmoid', 'relu', and 'linear')
         """
 
-        super(FullyConnectedLayer, self).__init__()
+        super(Dense, self).__init__()
 
-        self.input_size = input_size
-        self.hidden_size = hidden_size
-
-        self.w = nn.Parameter(0.01 * torch.randn(self.hidden_size, self.input_size,
+        self.w = nn.Parameter(weight_factory * torch.randn(output_size, input_size,
                               requires_grad=True, dtype=torch.float64))
 
-        self.b = nn.Parameter(0.01 * torch.randn(self.hidden_size, 1,
+        self.b = nn.Parameter(weight_factory * torch.randn(output_size, 1,
                               requires_grad=True, dtype=torch.float64))
 
         # activation type
@@ -43,7 +40,7 @@ class FullyConnectedLayer(torch.nn.Module):
         # type: (Tensor) -> Tuple[Tensor]
 
         """
-        Forward pass through a Fully Connected Layer.
+        Forward pass through a Dense Layer.
 
         :param input: input
         """

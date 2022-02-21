@@ -21,13 +21,13 @@ def main():
     # Use trained ARX
     # If using already trained models, then configure
     # models save location above.
-    trained_model = False
+    trained_model = True
 
     # Training Parameters
     epochs, print_every = 1000, 10
 
     # ARX TDL Sizes for Input and Output
-    delays = 6
+    delays = 2
 
     # Prediction horizon for training
     prediction_horizon = 100
@@ -73,7 +73,7 @@ def main():
     input_tensor, label_tensor = input_tensor[:, :10000, :], label_tensor[:, :10000, :]
     plot_response(model, input_tensor, label_tensor)
 
-    # Plot autocorrelation function for residual errors (prediction errors)
+    # Plot auto-correlation function for residual errors (prediction errors)
     input_tensor, label_tensor = init_training_data(model, inputs, labels,
                                                     prediction_horizon=prediction_horizon,
                                                     overlap=True)

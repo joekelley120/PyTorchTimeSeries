@@ -91,11 +91,11 @@ def main():
 
     # Setup Controller models
     plus_one = 1 if narx_zero_input_delay is True else 0
-    iw = plant.cell.fully[0].w[:, :(plus_one + narx_delay)]
-    ow = plant.cell.fully[0].w[:, (plus_one + narx_delay):]
-    b1 = plant.cell.fully[0].b
-    lw = plant.cell.lw
-    b2 = plant.cell.b2
+    iw = plant.cell.hidden_layers[0].w[:, :(plus_one + narx_delay)]
+    ow = plant.cell.hidden_layers[0].w[:, (plus_one + narx_delay):]
+    b1 = plant.cell.hidden_layers[0].b
+    lw = plant.cell.output_layer.w
+    b2 = plant.cell.output_layer.b
     controller_setup = ControllerConfiguration(mrac_delay, mrac_delay, mrac_delay, mrac_neurons,
                                                narx_delay, narx_delay, narx_neurons,
                                                iw, ow, b1, lw, b2)

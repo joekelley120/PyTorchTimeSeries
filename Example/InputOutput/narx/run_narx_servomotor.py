@@ -21,13 +21,13 @@ def main():
     # Use trained narx
     # If using already trained models, then configure
     # models save location above.
-    trained_model = True
+    trained_model = False
 
     # Training Parameters
     epochs, print_every = 10000, 100
 
     # NARX TDL Sizes for Input and Output
-    delays = 8
+    delays = 15
 
     # Number of neurons in NARX model
     neurons = 10

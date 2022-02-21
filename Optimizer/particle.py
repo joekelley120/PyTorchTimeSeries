@@ -7,7 +7,7 @@ class PARTICLE(Optimizer):
     """
     Implements Gradient based Particle Optimization.
 
-    .. warning::
+    ... warning::
         This optimizer doesn't support per-parameter options and
         parameters groups.
 
